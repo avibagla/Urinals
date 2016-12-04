@@ -43,7 +43,7 @@ def choose_any_open_urinals(urinal_array):
 def run_simulation(line_length=100, urinals_in_bathroom=10):	
 	brom = Bathroom(urinals_in_bathroom, normal_rules)
 
-	[brom.add_person_to_line(Person(random.choice(xrange(2,6)))) for x in range(line_length)]
+	[brom.add_person_to_line(Person(5)) for x in range(line_length)]
 
 	while not brom.is_empty():
 		brom.one_minute_passed()
@@ -57,8 +57,9 @@ def run_simulation(line_length=100, urinals_in_bathroom=10):
 def main():
 	cleanest = collections.defaultdict(int)
 	dirtiest = collections.defaultdict(int)
-	for x in xrange(100):
-		b = run_simulation(1000)
+	for x in xrange(10000):
+		print 'simulation run:', x
+		b = run_simulation(100)
 		cleanest[b['cleanest']] += 1
 		dirtiest[b['dirtiest']] += 1
 
