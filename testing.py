@@ -9,7 +9,7 @@ from urinal import Urinal
 from person import Person
 from rules import normal_rules, choose_any_open_urinals
 
-def run_simulation(line_length=100, urinals_in_bathroom=10):	
+def run_long_line_simulation(line_length=100, urinals_in_bathroom=10):	
 	brom = Bathroom(urinals_in_bathroom, normal_rules)
 
 	[brom.add_person_to_line(Person(5)) for x in range(line_length)]
@@ -24,7 +24,7 @@ def run_simulation(line_length=100, urinals_in_bathroom=10):
 		}
 
 
-def main(simulation_runs=100, line_length=100, number_of_urinals=10):
+def main(simulation_runs=100, line_length=100, number_of_urinals=10, verbose=False):
 	print 'Simulation will run', simulation_runs, 'times.'
 	print 'There are', number_of_urinals, 'urinals'
 	print 'The line will start with', line_length, 'people'
@@ -32,8 +32,8 @@ def main(simulation_runs=100, line_length=100, number_of_urinals=10):
 	dirtiest_urinal_dictionary = collections.defaultdict(int)
 	total_uses_overall = [0]*number_of_urinals
 	for x in xrange(simulation_runs):
-		print 'simulation run:', x
-		b = run_simulation(line_length, number_of_urinals)
+		if verbose: print 'simulation run:', x
+		b = run_long_line_simulation(line_length, number_of_urinals)
 		cleanest_urinal_dictionary[b['cleanest']] += 1
 		dirtiest_urinal_dictionary[b['dirtiest']] += 1
 		total_uses_overall = [sum(x) for x in zip(total_uses_overall, b['total uses'])]
@@ -66,7 +66,6 @@ if __name__ == '__main__':
 			main(int(arguments['-s']), int(arguments['-l']), int(arguments['-u']))
 		else:
 			main()
-
 	else:
 		main()
 
