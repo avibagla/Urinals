@@ -44,14 +44,14 @@ def main(simulation_runs=100, line_length=100, number_of_urinals=10, verbose=Fal
 	print_str = '''Typically, the {0} urinal was urinal {1} with {2} occurrences as the {0} urinal\nUrinal {1} had an average of {3} uses'''
 	print print_str.format('cleanest', cleanest_urinal_overall, 
 		cleanest_urinal_dictionary[cleanest_urinal_overall], 
-		float(total_uses_overall[cleanest_urinal_overall])/number_of_urinals)
+		float(total_uses_overall[cleanest_urinal_overall])/simulation_runs)
 	print print_str.format('dirtiest', dirtiest_urinal_overall, 
 		dirtiest_urinal_dictionary[dirtiest_urinal_overall], 
-		float(total_uses_overall[dirtiest_urinal_overall])/number_of_urinals)
+		float(total_uses_overall[dirtiest_urinal_overall])/simulation_runs)
 	print '-'*80
 	print 'Average uses per urinal'
 	for x in range(number_of_urinals):
-		print x, ':', float(total_uses_overall[x])/number_of_urinals
+		print x, ':', float(total_uses_overall[x])/simulation_runs
 	
 
 
