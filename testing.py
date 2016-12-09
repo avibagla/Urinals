@@ -63,7 +63,7 @@ if __name__ == '__main__':
 		arguments = get_arguments(sys.argv, usage)
 		if len(arguments) == 3:
 		#We'll assume if there are arguments, all three would be specified.
-			main(arguments['-s'], arguments['-l'], arguments['-u'])
+			main(int(arguments['-s']), int(arguments['-l']), int(arguments['-u'])
 		else:
 			main()
 
