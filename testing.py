@@ -24,23 +24,35 @@ def run_simulation(line_length=100, urinals_in_bathroom=10):
 		}
 
 
-def main(simulation_runs=100, line_length=100, urinal_number=10):
+def main(simulation_runs=100, line_length=100, number_of_urinals=10):
 	print 'Simulation will run', simulation_runs, 'times.'
-	print 'There are', urinal_number, 'urinals'
+	print 'There are', number_of_urinals, 'urinals'
 	print 'The line will start with', line_length, 'people'
-	cleanest = collections.defaultdict(int)
-	dirtiest = collections.defaultdict(int)
+	cleanest_urinal_dictionary = collections.defaultdict(int)
+	dirtiest_urinal_dictionary = collections.defaultdict(int)
+	total_uses_overall = [0]*number_of_urinals
 	for x in xrange(simulation_runs):
 		print 'simulation run:', x
-		b = run_simulation(line_length, urinal_number)
-		cleanest[b['cleanest']] += 1
-		dirtiest[b['dirtiest']] += 1
+		b = run_simulation(line_length, number_of_urinals)
+		cleanest_urinal_dictionary[b['cleanest']] += 1
+		dirtiest_urinal_dictionary[b['dirtiest']] += 1
+		total_uses_overall = [sum(x) for x in zip(total_uses_overall, b['total uses'])]
 
-
-	print 'cleanest', cleanest
-	print 'cleanestest', max(cleanest, key=lambda x: cleanest[x])
-	print 'dirtiest', dirtiest
-	print 'dirtiestest', max(dirtiest, key=lambda x: cleanest[x])
+	print '-'*80
+	cleanest_urinal_overall = max(cleanest_urinal_dictionary, key=lambda x: cleanest_urinal_dictionary[x])
+	dirtiest_urinal_overall = max(dirtiest_urinal_dictionary, key=lambda x: dirtiest_urinal_dictionary[x])
+	print_str = '''Typically, the {0} urinal was urinal {1} with {2} occurrences as the {0} urinal\nUrinal {1} had an average of {3} uses'''
+	print print_str.format('cleanest', cleanest_urinal_overall, 
+		cleanest_urinal_dictionary[cleanest_urinal_overall], 
+		float(total_uses_overall[cleanest_urinal_overall])/number_of_urinals)
+	print print_str.format('dirtiest', dirtiest_urinal_overall, 
+		dirtiest_urinal_dictionary[dirtiest_urinal_overall], 
+		float(total_uses_overall[dirtiest_urinal_overall])/number_of_urinals)
+	print '-'*80
+	print 'Average uses per urinal'
+	for x in range(number_of_urinals):
+		print x, ':', float(total_uses_overall[x])/number_of_urinals
+	
 
 
 if __name__ == '__main__':
